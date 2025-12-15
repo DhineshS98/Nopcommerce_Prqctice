@@ -1,7 +1,9 @@
 package Pages;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -14,6 +16,8 @@ import org.testng.annotations.BeforeMethod;
 import com.aventstack.extentreports.utils.FileUtil;
 
 public class Genericmethods extends Basepage {
+	
+	
 	
 	/*@BeforeMethod
 	void launchapplication()
@@ -37,5 +41,6 @@ public class Genericmethods extends Basepage {
 		FileUtils.copyDirectory(src, destination);
 		
 	}*/
+	
 
 }

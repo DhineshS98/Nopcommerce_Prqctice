@@ -1,33 +1,33 @@
 package Tests;
-
+import org.testng.annotations.Listeners;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import Pages.Basepage;
 import Pages.Genericmethods;
 import Pages.Register;
-
+@Listeners(listeners.MyListeners.class)
 public class Test_01_Register extends Basepage{
-	
-	//public WebDriver driver;
-	
-	@Test
+		
+	@Test(priority=1)	
 	void testregisterpage() throws InterruptedException
 	{
+		logger.info("Starting TC_01 Testregister");
 		Register r=new Register(driver);
-		r.registermethod();
-		String expected="Your registration completed";
-		Assert.assertEquals("Your registration completed",expected);
+		String actual="Your registration completed";
+		Assert.assertEquals(actual,r.registermethod());
 		
 	}
 	
-	@Test(enabled=false)
+	@Test(priority=2)
 	void login()
 	{
+		logger.info("Starting TC_01 Login");
 		Boolean isdisplayed=driver.findElement(By.xpath("//a[text()='Log out']")).isDisplayed();
-		Assert.assertTrue(isdisplayed,"Logout button is not visible");
+		Assert.assertTrue(isdisplayed);
 		
 	}
 	

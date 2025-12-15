@@ -1,5 +1,11 @@
 package Pages;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,12 +14,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Register{
 	
 	private WebDriver driver;
-
-	//public WebDriver driver;
 	public Register(WebDriver driver) {
 		this.driver=driver;
 	}
 	
+	//Method to load test data
+	Properties p;
+	public void testdata() throws IOException {
+	FileInputStream fis=new FileInputStream("C:\\Users\\Dhinesh\\eclipse-workspace\\Nopcommerce\\src\\test\\resources\\Payload.properties");
+	p=new Properties();
+	p.load(fis);
+	}
+			
+	private By login=By.xpath("//a[text()='Log in']");
 	private By rgsbutton=By.xpath("//a[text()='Register']");
 	private By Malecheckbox=By.xpath("//input[@value='M']");
 	private By firstname=By.id("FirstName");
@@ -21,20 +34,35 @@ public class Register{
 	private By Email =By.id("Email");
 	private By password=By.id("Password");
 	private By conpassword=By.id("ConfirmPassword");
-	private By Register = By.xpath("(//button[@type='submit'])[2]");
+	private By Register = By.xpath("(//input[@type='submit'])[2]");
+	private By logout = By.xpath("//a[text()='Log out']");
 	
-	public void registermethod() throws InterruptedException
+	
+	
+	    	
+	public String registermethod() throws InterruptedException
 	{
-		WebDriverWait wait=new WebDriverWait(driver,10);
+		WebDriverWait wait=new WebDriverWait(driver,20);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(rgsbutton));
-		//driver.findElement(By.xpath("//a[text()='Register']")).click();
+		driver.findElement(By.xpath("//a[text()='Register']")).click();
 		Thread.sleep(3000);
 		driver.findElement(Malecheckbox).click();
-		driver.findElement(firstname).sendKeys("Dhinesh");
-		driver.findElement(lastname).sendKeys("S");
-		driver.findElement(password).sendKeys("Dhinesh1234555");
-		driver.findElement(conpassword).sendKeys("Dhinesh1234555");
+		driver.findElement(firstname).sendKeys(p.getProperty("firstname"));
+		driver.findElement(lastname).sendKeys(p.getProperty("lastname"));
+		driver.findElement(Email).sendKeys(p.getProperty("Email"));
+		driver.findElement(password).sendKeys(p.getProperty("password"));
+		driver.findElement(conpassword).sendKeys(p.getProperty("conpassword"));
 		driver.findElement(Register).click();
+		String expected=driver.findElement(By.xpath("//div[normalize-space(text())='Your registration completed']")).getText();
+		return expected;
+	}
+	
+	public void login() throws IOException
+	{
+		driver.findElement(login).click();
+		driver.findElement(Email).sendKeys(p.getProperty("Email"));
+		driver.findElement(password).sendKeys(p.getProperty("password"));
+		driver.findElement(By.xpath("//input[@value='Log in']")).click();
 	}
 
 }
