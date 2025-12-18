@@ -1,5 +1,8 @@
 package Tests;
 import org.testng.annotations.Listeners;
+
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -13,10 +16,10 @@ import Pages.Register;
 public class Test_01_Register extends Basepage{
 		
 	@Test(priority=1)	
-	void testregisterpage() throws InterruptedException
+	void testregisterpage() throws InterruptedException, IOException
 	{
 		logger.info("Starting TC_01 Testregister");
-		Register r=new Register(driver);
+		Register r=new Register(driver, p);
 		String actual="Your registration completed";
 		Assert.assertEquals(actual,r.registermethod());
 		
